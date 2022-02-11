@@ -5,7 +5,7 @@ A PartyRent é uma pequena empresa voltada a realização de aluguel para artigo
 ## Instruções
 1. Clonar repositório
 ```
-$ git clone git@github.com:UnBArqDsw2021-2/2021.2_G7_PartyRent.git
+$ git clone git@github.com:UnBArqDsw2021-2/2021.2_G7_PartyRent_Backend.git
 ```
 
 2. Build das dependências do projeto
