@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import environ
 import os
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'productRental',
+    'userRental'
 ]
 
 MIDDLEWARE = [
@@ -107,6 +110,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_ALLOW_REFRESH': True,
+#    'JWT_RESPONSE_PAYLOAD_HANDLER': '.serializers.webtoken_serializer.jwt_response_payload_handler',
+}
+
+AUTH_USER_MODEL = 'userRental.User'
+
+
+ADMINS = [
+    ['caiogabriel','caio@redesocial.com'],
+    ['joaogabriel','joao@redesocial.com']
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
