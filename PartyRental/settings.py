@@ -122,7 +122,6 @@ AUTH_USER_MODEL = 'userRental.User'
 
 ADMINS = [
     ['caiogabriel','caio@redesocial.com'],
-    ['joaogabriel','joao@redesocial.com']
 ]
 
 # Internationalization
