@@ -14,21 +14,25 @@ from pathlib import Path
 import environ
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_configuration = environ.Env()
-env_configuration.read_env(os.path.join(BASE_DIR, '.env'))
+ENVFILE_PATH = os.path.join(BASE_DIR, '.env')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+# Take environment variables from .env file
+environ.Env.read_env(ENVFILE_PATH)
+
+# set casting, default value DEBUG = False
+env_config = environ.Env(DEBUG=(bool, False))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env_configuration.str('SECRET_KEY')
+SECRET_KEY = env_config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# False if not in os.environ because of casting above
+DEBUG = env_config('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [env_config("ALLOWED_HOSTS")]
 
 
 # Application definition
@@ -73,20 +77,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'PartyRental.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env_configuration.str('DB'),
-        'USER': env_configuration.str('DB_USER'),
-        'PASSWORD': env_configuration.str('DB_PASS'),
-        'HOST': env_configuration.str('DB_HOST'),
-        'PORT': 5432,
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env_config("POSTGRES_DB"),
+        "USER": env_config("POSTGRES_USER"),
+        "PASSWORD": env_config("POSTGRES_PASSWORD"),
+        "HOST": env_config("POSTGRES_HOST"),
+        "PORT": env_config("POSTGRES_PORT"),
+    },
+
+    'sqlite': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 
 # Password validation
@@ -111,9 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "pt-br"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "America/Sao_Paulo"
 
 USE_I18N = True
 
