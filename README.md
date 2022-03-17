@@ -18,7 +18,8 @@ git clone git@github.com:UnBArqDsw2021-2/2021.2_G7_PartyRent_Backend.git
 ```
     
 
-### Instalação Local
+### Instalação Local (linux)
+
 ``` bash
 cd 2021.2_G7_PartyRent_Backend
 ```
@@ -32,40 +33,33 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 ``` bash
-"Editar settings.py" 
+cp contrib/.env-sample-local .env
 ```
-### Usando Docker
-
-  
-
-Copiar arquivo de variaveis de ambiente de desenvolvimento:  
-
-  
 ``` bash
-cp contrib/.env-sample .env  
+python manage.py migrate
 ```
+``` bash
+python manage.py runserver  
+```  
 
-  
-
+Agora abra o navegador e vá para: "http://localhost:8000" e você deve ver a tela inicial do Django:  
+    
+    
+### Usando Docker  
+    
+Copiar arquivo de variaveis de ambiente de desenvolvimento:  
+``` bash
+cp contrib/.env-sample-docker .env
+```
+    
 Execução do conteiner:
-
-  
-
 ``` bash
 sudo docker-compose up
 ```
 
-  
+Agora abra o navegador e vá para: "http://0.0.0.0:8040" e você deve ver a tela inicial do Djang  
 
-Agora abra o navegador e vá para: 
-
-  
-``` bash
-http://0.0.0.0:8040  
-```
-Você deve ver a tela inicial do Django:  
-
-  
+    
 
 ### **Front-end:**
 
