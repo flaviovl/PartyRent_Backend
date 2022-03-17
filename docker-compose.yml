@@ -15,7 +15,7 @@ services:
     restart: always
     build: .
     env_file: .env
-    command: ["sh", "scripts/start.sh"]
+    command: ["sh", "scripts/start.sh"] 
     ports:
       - 8040:8040
     volumes:
