@@ -20,24 +20,6 @@ class Product(models.Model):
     like = models.IntegerField(null=False, blank=False, default=0)
     category = models.ManyToManyField(Category, related_name="product_category")
 
-    def __init__(self, category):
-        if not Category.objects.get(category):
-            Category.objects.create(name=category)
-        self.category = Category.objects.get(category) 
-
-    def set_atributes(self, name, description, price):
-        self.name = name
-        self.description = description
-        self.price = price
-     
-class ProductCreator:
-    "The Factory Class"   
-    @staticmethod
-    def create_object(category_name):
-        if category_name:
-            return Product.objects.create(category_name)
-        return None
-        
 class OrderItens(models.Model):
     products = models.OneToOneField(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False, default=1)
