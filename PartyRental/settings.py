@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'productRental',
     'userRental'
     'rest_framework',
+    'drf_yasg',
     'users',
     'product',
     'shoppingcart',
