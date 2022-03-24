@@ -1,8 +1,6 @@
 .env
-<<<<<<< HEAD
 migrations/
 __pycache__/
-=======
 .venv
 .DS_Store
 .idea
@@ -11,4 +9,3 @@ __pycache__/
 __pycache__
 staticfiles/
 .ipynb_checkpoints/
->>>>>>> 2d76727 (chore: update .gitignore)
