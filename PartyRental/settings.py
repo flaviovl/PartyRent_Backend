@@ -36,13 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'productRental',
     'userRental'
-=======
     'rest_framework',
     'users',
->>>>>>> 60910c6 (#54: add user model)
 ]
 
 MIDDLEWARE = [
