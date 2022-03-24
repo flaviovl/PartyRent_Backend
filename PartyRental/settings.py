@@ -27,6 +27,8 @@ DEBUG = env_config('DEBUG')
 
 ALLOWED_HOSTS = [env_config("ALLOWED_HOSTS")]
 
+AUTH_USER_MODEL = 'users.User'
+
 
 # Application definition
 INSTALLED_APPS = [
