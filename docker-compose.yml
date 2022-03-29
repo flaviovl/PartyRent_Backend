@@ -1,26 +1,27 @@
-version: "3.8"
-  
+
+version: '3.9'
 services:
 
-  web:
-    env_file:
-      - .env
-    build: .
-    command: python manage.py runserver 0.0.0.0:8040
+  pr-db:
+    container_name: pr-db
+    restart: always
+    image: postgres:13.4-alpine
+    env_file: .env
     volumes:
-      - .:/code
-    ports:
-      - "8040:8040"
-    depends_on:
-      - db
+      - pg-data:/var/lib/postgresql/data
 
-  db:
-    image: postgis/postgis:12-3.0-alpine
-    expose:
-      - 5432
-    environment:
-      - POSTGRES_PASSWORD=party_pass#2022
-      - POSTGRES_USER=party_user
-      - POSTGRES_DB=db
+  pr-api:
+    container_name: pr-api
+    restart: always
+    build: .
+    env_file: .env
+    command: ["sh", "scripts/start.sh"] 
+    ports:
+      - 8040:8040
     volumes:
-      - "/opt/PartyRental/:/var/lib/postgresql/data"
+      - .:/party-rental
+    depends_on:
+      - pr-db
+
+volumes:
+  pg-data: {}

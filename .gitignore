@@ -1,3 +1,17 @@
 .env
+<<<<<<< HEAD
 migrations/
 __pycache__/
+=======
+.venv
+.DS_Store
+.idea
+*.sqlite3
+*pyc
+__pycache__
+staticfiles/
+.ipynb_checkpoints/
+pictures/
+# Ignore automatic migrations
+*/migrations/*.py
+>>>>>>> dev
