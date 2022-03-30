@@ -9,9 +9,6 @@ __pycache__/
 __pycache__
 staticfiles/
 .ipynb_checkpoints/
-<<<<<<< HEAD
-=======
 pictures/
 # Ignore automatic migrations
 */migrations/*.py
->>>>>>> f4f8282 (#54: update .gitignore migrations and staticfile)

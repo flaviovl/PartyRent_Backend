@@ -122,11 +122,11 @@ JWT_AUTH = {
 #    'JWT_RESPONSE_PAYLOAD_HANDLER': '.serializers.webtoken_serializer.jwt_response_payload_handler',
 }
 
-AUTH_USER_MODEL = 'userRental.User'
+AUTH_USER_MODEL = 'users.User'
 
 
 ADMINS = [
-    ['caiogabriel','caio@redesocial.com'],
+    ['caiogabriel','caio@gmail.com'],
 ]
 
 # Internationalization
