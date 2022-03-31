@@ -46,6 +46,35 @@ python manage.py runserver
 ```  
 
 Agora abra o navegador e vá para: "http://localhost:8000" e você deve ver a tela inicial do Django:  
+
+### Instalação Local (windows)
+
+``` bash
+cd 2021.2_G7_PartyRent_Backend
+```
+``` bash
+python -m venv venv   
+```
+``` bash
+.\venv\Scripts\Activate.ps1 
+```
+``` bash
+pip install -r requirements.txt
+```
+``` bash
+cp contrib/.env-sample-local .env
+```
+``` bash
+python manage.py makemigrations
+```
+``` bash
+python manage.py migrate
+```
+``` bash
+python manage.py runserver  
+```  
+
+Agora abra o navegador e vá para: "http://localhost:8000" e você deve ver a tela inicial do Django:  
     
     
 ### Usando Docker  
