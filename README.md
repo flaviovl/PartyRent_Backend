@@ -36,6 +36,9 @@ pip install -r requirements.txt
 cp contrib/.env-sample-local .env
 ```
 ``` bash
+python manage.py makemigrations
+```
+``` bash
 python manage.py migrate
 ```
 ``` bash
