@@ -1,10 +1,11 @@
 from django.contrib.auth.models import Group
 from .models import User
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(max_length=68, min_length=6)
 
     class Meta:
         model = User
