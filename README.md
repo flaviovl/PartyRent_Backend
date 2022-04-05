@@ -57,7 +57,7 @@ Execução do conteiner:
 sudo docker-compose up
 ```
 
-Agora abra o navegador e vá para: "http://0.0.0.0:8040" e você deve ver a tela inicial do Djang  
+Agora abra o navegador e vá para: "http://0.0.0.0:8040" e você deve ver a tela inicial do Django: 
 
     
 
