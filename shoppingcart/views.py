@@ -24,6 +24,8 @@ class CartItemViewSet(viewsets.ModelViewSet):
 
 
 class RentalOrderViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+
     queryset = RentalOrder.objects.all()
     serializer_class = RentalOrderSerializer
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
