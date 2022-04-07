@@ -17,9 +17,10 @@ class ShoppingCartViewSet(viewsets.ModelViewSet):
 
 
 class CartItemViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 class RentalOrderViewSet(viewsets.ModelViewSet):
