@@ -5,3 +5,4 @@ psycopg2-binary==2.9.3
 django-extensions==3.1.5
 Pillow
 drf-yasg==1.20.0
+django-cors-headers
