@@ -7,6 +7,7 @@ from rest_framework.routers import DefaultRouter
 from review import urls as review_routes
 from shoppingcart import urls as cart_routes
 from users import urls as user_routes
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
 router.registry.extend(user_routes.router.registry)
@@ -29,6 +30,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
+    path('token/', TokenObtainPairView.as_view()),
+    path('token/refresh', TokenRefreshView.as_view())
+
 ]
 
 # swagger
