@@ -8,6 +8,7 @@ from pathlib import Path
 
 import environ
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENVFILE_PATH = os.path.join(BASE_DIR, '.env')
@@ -28,8 +29,6 @@ DEBUG = env_config('DEBUG')
 ALLOWED_HOSTS = [env_config("ALLOWED_HOSTS")]
 
 AUTH_USER_MODEL = 'users.User'
-
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
