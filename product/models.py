@@ -7,6 +7,7 @@ class Product(models.Model):
     weight = models.IntegerField('peso')
     active = models.BooleanField('ativo', default=True)
     price = models.DecimalField('preço', max_digits=7, decimal_places=2)
+    teste = models.ImageField(upload_to='media/product_photo', blank=True, null=True)
     category = models.ForeignKey(
         'Category',
         verbose_name='categoria',
