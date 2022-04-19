@@ -53,7 +53,7 @@ Agora abra o navegador e vá para: "http://localhost:8000" e você deve ver a te
 cd 2021.2_G7_PartyRent_Backend
 ```
 ``` bash
-python -m venv venv   
+python -m venv venv  
 ```
 ``` bash
 .\venv\Scripts\Activate.ps1 
@@ -66,23 +66,13 @@ cp contrib/.env-sample-local .env
 ```
 ``` bash
 python manage.py makemigrations
-python3 -m venv .venv
-```
-``` bash
-source .venv/bin/activate
-```
-``` bash
-pip install -r requirements.txt
-```
-``` bash
-cp contrib/.env-sample-local .env
 ```
 ``` bash
 python manage.py migrate
 ```
 ``` bash
 python manage.py runserver  
-```  
+``` 
 
 Agora abra o navegador e vá para: "http://localhost:8000" e você deve ver a tela inicial do Django:  
     
