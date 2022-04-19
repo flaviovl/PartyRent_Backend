@@ -1,4 +1,6 @@
 .env
+migrations/
+__pycache__/
 .venv
 .DS_Store
 .idea
@@ -7,3 +9,6 @@
 __pycache__
 staticfiles/
 .ipynb_checkpoints/
+pictures/
+# Ignore automatic migrations
+*/migrations/*.py

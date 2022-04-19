@@ -2,9 +2,11 @@
 Django settings for PartyRental project.
 """
 
-from pathlib import Path
-import environ
+import datetime
 import os
+from pathlib import Path
+
+import environ
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +28,7 @@ DEBUG = env_config('DEBUG')
 
 ALLOWED_HOSTS = [env_config("ALLOWED_HOSTS")]
 
-
+AUTH_USER_MODEL = 'users.User'
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_yasg',
+    'users',
+    'product',
+    'shoppingcart',
+    'review',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -45,7 +54,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'PartyRental.urls'
 
@@ -105,6 +118,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_ALLOW_REFRESH': True,
+#    'JWT_RESPONSE_PAYLOAD_HANDLER': '.serializers.webtoken_serializer.jwt_response_payload_handler',
+}
+
+AUTH_USER_MODEL = 'users.User'
+
+
+ADMINS = [
+    ['caiogabriel','caio@gmail.com'],
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -127,3 +153,11 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+
+}

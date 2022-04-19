@@ -36,6 +36,48 @@ pip install -r requirements.txt
 cp contrib/.env-sample-local .env
 ```
 ``` bash
+python manage.py makemigrations
+```
+``` bash
+python manage.py migrate
+```
+``` bash
+python manage.py runserver  
+```  
+
+Agora abra o navegador e vá para: "http://localhost:8000" e você deve ver a tela inicial do Django:  
+
+### Instalação Local (windows)
+
+``` bash
+cd 2021.2_G7_PartyRent_Backend
+```
+``` bash
+python -m venv venv   
+```
+``` bash
+.\venv\Scripts\Activate.ps1 
+```
+``` bash
+pip install -r requirements.txt
+```
+``` bash
+cp contrib/.env-sample-local .env
+```
+``` bash
+python manage.py makemigrations
+python3 -m venv .venv
+```
+``` bash
+source .venv/bin/activate
+```
+``` bash
+pip install -r requirements.txt
+```
+``` bash
+cp contrib/.env-sample-local .env
+```
+``` bash
 python manage.py migrate
 ```
 ``` bash
@@ -57,10 +99,10 @@ Execução do conteiner:
 sudo docker-compose up
 ```
 
-Agora abra o navegador e vá para: "http://0.0.0.0:8040" e você deve ver a tela inicial do Django: 
-
+Agora abra o navegador e vá para: "http://0.0.0.0:8000" e você deve ver a tela inicial do Djang  
     
 
 ### **Front-end:**
 
-Para instalar a camada front-end da aplicação basta seguir os passos de instalação descritos [aqui](https://github.com/UnBArqDsw2021-2/2021.2_G7_PartyRent)
+Para instalar a camada front-end da aplicação basta seguir os passos de instalação descritos [aqui](https://github.com/UnBArqDsw2021-2/2021.2_G7_PartyRent_Frontend)
+
