@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
+
 
 class UserManager(BaseUserManager):
 
@@ -34,12 +35,13 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     
-    username = models.CharField(('name'), max_length=200, null=True)
-    email = models.EmailField(('email address'), unique=True, blank=False)
-    is_administrator = models.BooleanField('Administrator', default=False)
-    phone_number = models.CharField(blank=True, null=False, default="", max_length=15)
-    birth_date = models.DateField(blank=True, null=True)
-    picture = models.ImageField(upload_to='media/client_photo', blank=True, null=True)
+    username = models.CharField('nome', max_length=200, null=True)
+    email = models.EmailField('email', unique=True, blank=False)
+    phone_number = models.CharField('telefone', blank=True, null=False, default="", max_length=15)
+    birth_date = models.DateField('data nascimento', blank=True, null=True)
+    picture = models.ImageField('foto', upload_to="images/", default="images/no-img-user.png", blank=True, null=True)
+    is_admin = models.BooleanField('administrador', default=False)
+    is_active = models.BooleanField('ativo', default=True)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'

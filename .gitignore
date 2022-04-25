@@ -10,5 +10,7 @@ __pycache__
 staticfiles/
 .ipynb_checkpoints/
 pictures/
+media/
+popula/
 # Ignore automatic migrations
 */migrations/*.py
