@@ -1,39 +1,46 @@
-from django.contrib.auth.models import Group
-from .models import User
 from rest_framework import serializers
-from django.contrib.auth.hashers import make_password
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from .models import User
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    password = serializers.CharField(max_length=68, min_length=6)
+class UserSignupSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(style={"input_type": "password"}, write_only=True)
+    password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
 
     class Meta:
         model = User
         fields = [
-            'id',
-            'username',
-            'is_administrator',
-            'phone_number',
-            'birth_date',
-            'email',
-            'password',
-            'picture'
+            "id",
+            "is_admin",
+            "username",
+            "email",
+            "password",
+            "password2",
+            "phone_number",
+            "birth_date",
+            "picture"
         ]
+        extra_kwargs = {
+            "password": {
+                "write_only": True,
+                "style": {"input_type": "password"}
+            }
+        }
 
-        def create(self, validated_data):
-            user = User(
-                name=validated_data.get('name', None),
-                email=validated_data.get('email', None),
-            )
-            user.set_password(validated_data.get('password', None))
-            user.save()
-            return user
+    def save(self):
+        user = User(email=self.validated_data["email"],)
+        password = self.validated_data["password"]
+        password2 = self.validated_data["password2"]
+        
+        if password != password2:
+            raise serializers.ValidationError({"password": "Passwords must match."})
+        user.set_password(password)
+        user.save()
+        return user
 
-        def update(self, instance, validated_data):
-            for field in validated_data:
-                if field == 'password':
-                    instance.set_password(validated_data.get(field))
-                else:
-                    instance.__setattr__(field, validated_data.get(field))
-            instance.save()
-            return instance
+class UserMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email')
+        read_only_fields = ('id', 'email', )
