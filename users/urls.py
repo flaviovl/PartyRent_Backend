@@ -7,12 +7,12 @@ from .views import ListDetailUserAPIView, SigninAPIView, SignoutAPIView, SignupA
 app_name = 'users'
 
 urlpatterns = [
-    path('users/', ListDetailUserAPIView.as_view(), name='list-users'),
-    path('users/<int:query>/', ListDetailUserAPIView.as_view(), name='user-detail'),
-    path('signup/', SignupAPIView.as_view(), name='register'),
-    path('signin/', SigninAPIView.as_view(), name='login'),
-    path('signout/', SignoutAPIView.as_view(), name='logout'),
-    path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_verify'),
+    path('user/', ListDetailUserAPIView.as_view(), name='list-users'),
+    path('user/<int:query>/', ListDetailUserAPIView.as_view(), name='user-detail'),
+    path('user/signup/', SignupAPIView.as_view(), name='register'),
+    path('user/signin/', SigninAPIView.as_view(), name='login'),
+    path('user/signout/', SignoutAPIView.as_view(), name='logout'),
+    path('user/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('user/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_verify'),
 ]
