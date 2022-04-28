@@ -1,19 +1,12 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path, re_path
+from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from product import urls as product_routes
-from rest_framework.routers import DefaultRouter
-from review import urls as review_routes
-from shoppingcart import urls as cart_routes
-from users import urls as user_routes
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework import permissions
 
-router = DefaultRouter()
-router.registry.extend(user_routes.router.registry)
-router.registry.extend(product_routes.router.registry)
-router.registry.extend(cart_routes.router.registry)
-router.registry.extend(review_routes.router.registry)
+# from .views import home
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,21 +17,22 @@ schema_view = get_schema_view(
         license=openapi.License(name="FGA License"),
     ),
     public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 
 urlpatterns = [
+    # path('', home, name='api.home'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path("admin/", admin.site.urls),
-    path("", include(router.urls)),
-    path('token/', TokenObtainPairView.as_view()),
-    path('token/refresh', TokenRefreshView.as_view())
-
+    path("api/", include("users.urls")),
+    path("api/", include("product.urls")),
+    path("api/", include("shoppingcart.urls")),
+    # path("review/", include("review.urls")),
+    # path("", include(router.urls)),
+    # path('token/', TokenObtainPairView.as_view()),
+    # path('token/refresh', TokenRefreshView.as_view())
 ]
 
-# swagger
-urlpatterns += [
-    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-]
-
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
