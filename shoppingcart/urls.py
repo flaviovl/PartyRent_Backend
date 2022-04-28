@@ -1,10 +1,11 @@
-from django.urls import include, path
-from rest_framework import routers
-from .views import ShoppingCartViewSet, CartItemViewSet, RentalOrderViewSet
+from django.urls import path
 
-router = routers.DefaultRouter()
+from .views import CartItemAPIView, ShoppingCartAPIView
 
-router.register(r'cart', ShoppingCartViewSet)
-router.register(r'cartitem', CartItemViewSet)
-router.register(r'order', RentalOrderViewSet)
-
+urlpatterns = [
+    path("cartitem/", CartItemAPIView.as_view()),
+    path("cartitem/<int:pk>", CartItemAPIView.as_view()),
+    path("cart/", ShoppingCartAPIView.as_view()),
+    path("cart/<int:pk>", ShoppingCartAPIView.as_view()),
+    # path("cart/checkout/", checkout),
+]
