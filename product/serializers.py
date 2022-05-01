@@ -6,6 +6,14 @@ from product.models import Category, Product
 
 
 # from review.serializers import BasicReviewSerializer
+class ProductCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = [
+            "id",
+            "name",
+            "price",
+        ]
 class ProductBasicSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.name")
 
@@ -21,21 +29,18 @@ class ProductBasicSerializer(serializers.ModelSerializer):
         # depth = 1
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.name")
-    # product_reviews = BasicReviewSerializer(many=True)       # category_products = related_name
-    
-    # average_rating = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = [
             "id",
             "name",
-            # "slug",
-            "price",
-            "description",
             "category",
-            # "average_rating",
-            # "product_reviews",
+            "price",
+            "average_rating",
+            "description",
+            "slug",
             "endpoint_pk",
             "endpoint_slug",
             "path_pk",
@@ -45,12 +50,14 @@ class ProductSerializer(serializers.ModelSerializer):
         ]
         # depth = 1
 
-    # def get_average_rating(self, obj):
-    #     average = obj.product_reviews.aggregate(Avg('star_rating')).get('star_rating__avg')
-    #     if average is None:
-    #         return 0
-    #     return round(average, 2)
-class CategoryBasicSerializer(serializers.ModelSerializer):
+    def get_average_rating(self, obj):
+        average = obj.product_reviews.aggregate(Avg('star_rating')).get('star_rating__avg')
+        if average is None:
+            return 0
+        return round(average, 2)
+
+
+class CategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = [
@@ -58,8 +65,20 @@ class CategoryBasicSerializer(serializers.ModelSerializer):
             "name",
             "slug",
         ]
-class CategorySerializer(serializers.ModelSerializer):
-    category_products = ProductSerializer(many=True)       # category_products = related_name
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            "id",
+            "name",
+            "slug",
+            "path_pk",
+            "path_slug",
+        ]
+        
+
+class CategoryProductSerializer(serializers.ModelSerializer):
+    # products = ProductCategorySerializer(many=True)       # products = related_name
 
     class Meta:
         model = Category
@@ -67,12 +86,13 @@ class CategorySerializer(serializers.ModelSerializer):
             "id",
             "name",
             "slug",
-            "get_absolute_url",
-            "category_products"
+            "path_pk",
+            "path_slug",
+            # "quantity"
         ]
 
-
-# # class InvetorySerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Invetory
-#         fields = ['id', 'store_price', 'quantity']
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['quantity'] = instance.products.count()
+        data['products'] = ProductCategorySerializer(instance.products, many=True).data
+        return data
