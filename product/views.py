@@ -5,8 +5,9 @@ from rest_framework.views import APIView
 
 from product.models import Category, Product
 from product.serializers import (
-    CategoryBasicSerializer,
-    CategorySerializer,
+    CategoryDetailSerializer,
+    CategoryListSerializer,
+    CategoryProductSerializer,
     ProductBasicSerializer,
     ProductSerializer,
 )
@@ -16,18 +17,18 @@ class CategoryAPIView(APIView):
     def get(self, request, query=None):
         if query is None:
             category = get_list_or_404(Category)
-            serializer = CategorySerializer(category, many=True)
+            serializer = CategoryListSerializer(category, many=True)
         elif query.isdigit():
             category = get_object_or_404(Category, id=query)
-            serializer = CategorySerializer(category)
+            serializer = CategoryDetailSerializer(category)
         else:
             category = get_object_or_404(Category, slug=query)
-            serializer = CategorySerializer(category)
+            serializer = CategoryDetailSerializer(category)
         
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = CategoryBasicSerializer(data=request.data)
+        serializer = CategoryListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -76,15 +77,15 @@ class ProductsBasicListAPIView(APIView):
         return Response(serializer.data)
 
 
-class CategoryBasicListAPIView(APIView):
-    def get(self, request, format=None):
-        products = get_list_or_404(Product)
-        serializer = CategoryBasicSerializer(products, many=True)
+class CategoryProductAPIView(APIView):
+    def get(self, request, query=None):
+        if query is None:
+            category = get_list_or_404(Category)
+            serializer = CategoryProductSerializer(category, many=True)
+        elif query.isdigit():
+            category = get_object_or_404(Category, id=query)
+            serializer = CategoryProductSerializer(category)
+        else:
+            category = get_object_or_404(Category, slug=query)
+            serializer = CategoryProductSerializer(category)
         return Response(serializer.data)
-
-    def post(self, request):
-        serializer = CategoryBasicSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
