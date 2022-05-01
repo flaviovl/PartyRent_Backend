@@ -1,3 +1,5 @@
+from django.shortcuts import get_list_or_404, get_object_or_404
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,41 +15,44 @@ from product.serializers import (
 class CategoryAPIView(APIView):
     def get(self, request, query=None):
         if query is None:
-            category = Category.objects.all()
+            category = get_list_or_404(Category)
+            serializer = CategorySerializer(category, many=True)
         elif query.isdigit():
-            category = Category.objects.filter(id=query)
+            category = get_object_or_404(Category, id=query)
+            serializer = CategorySerializer(category)
         else:
-            category = Category.objects.filter(slug=query)
+            category = get_object_or_404(Category, slug=query)
+            serializer = CategorySerializer(category)
         
-        serializer = CategorySerializer(category, many=True)
-        return Response(serializer.data, status=201)
+        return Response(serializer.data)
 
     def post(self, request):
         serializer = CategoryBasicSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProductAPIView(APIView):
     def get(self, request, query=None):
         if query is None:
-            product = Product.objects.all()
+            product = get_list_or_404(Product)
+            serializer = ProductSerializer(product, many=True)
         elif query.isdigit():
-            product = Product.objects.filter(id=query)
+            product = get_object_or_404(Product, id=query)
+            serializer = ProductSerializer(product)
         else:
-            product = Product.objects.filter(slug=query)
-        
-        serializer = ProductSerializer(product, many=True)
-        return Response(serializer.data, status=201)
+            product = get_object_or_404(Product, slug=query)
+            serializer = ProductSerializer(product)
+        return Response(serializer.data)
 
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProductDetailAPIView(APIView):
@@ -66,13 +71,20 @@ class ProductsListLatestAPIView(APIView):
 
 class ProductsBasicListAPIView(APIView):
     def get(self, request, format=None):
-        products = Product.objects.all()
+        products = get_list_or_404(Product)
         serializer = ProductBasicSerializer(products, many=True)
         return Response(serializer.data)
 
 
 class CategoryBasicListAPIView(APIView):
     def get(self, request, format=None):
-        products = Product.objects.all()
+        products = get_list_or_404(Product)
         serializer = CategoryBasicSerializer(products, many=True)
         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CategoryBasicSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
