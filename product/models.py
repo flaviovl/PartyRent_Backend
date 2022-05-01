@@ -1,9 +1,7 @@
 from io import BytesIO
 
-from django.conf import settings
 from django.core.files import File
 from django.db import models
-from django.urls import path
 from django.utils.text import slugify
 from PartyRental.settings import BASE_DEBUG_URL as baseURL
 from PIL import Image
@@ -18,12 +16,16 @@ class Category(models.Model):
         verbose_name_plural = 'categorias'
         ordering = ('id',)
 
-    @property
-    def get_absolute_url(self):
-        return f'/{self.slug}/'
-
-    def __str__(self):
+    def __str__(self): 
         return self.name
+
+    @property
+    def path_pk(self):
+        return f"api/category/{self.pk}/"
+    
+    @property
+    def path_slug(self):
+        return f"api/category/{self.slug}/"
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -35,7 +37,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category,
         verbose_name='Categoria',
-        related_name='category_products',
+        related_name='products',
         on_delete=models.SET_NULL,
         null=True,
         blank=True
@@ -54,7 +56,13 @@ class Product(models.Model):
         verbose_name = 'produto'
         verbose_name_plural = 'produtos'
         ordering = ('-created',)
-        
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return f"{self.id}: {self.name}"
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -70,11 +78,11 @@ class Product(models.Model):
 
     @property
     def path_pk(self):
-        return f"api/products/{self.pk}/"
+        return f"api/product/{self.pk}/"
     
     @property
     def path_slug(self):
-        return f"api/products/{self.slug}/"
+        return f"api/product/{self.slug}/"
 
     @property
     def image_url(self):
@@ -110,6 +118,3 @@ class Product(models.Model):
         img.save(thumb_io, 'JPEG', quality=85)
 
         return File(thumb_io, name=image.name)
-
-    def __str__(self):
-        return self.name
