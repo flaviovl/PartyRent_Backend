@@ -4,7 +4,6 @@ from users.models import User
 
 
 class Review(models.Model):
-
     client = models.ForeignKey(
         User,
         verbose_name="Cliente",
@@ -27,4 +26,4 @@ class Review(models.Model):
         ordering = ["id"]
 
     def __str__(self):
-        return f"Cliente: {self.client.username} - Produto: {self.product.name}"
+        return f"{self.product.email}"
